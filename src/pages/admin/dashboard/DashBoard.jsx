@@ -2,11 +2,19 @@ import { useContext } from "react";
 import Layout from "../../../components/layout/Layout";
 import myContext from "../../../context/data/myContext";
 import { Button } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const context = useContext(myContext);
   const { mode } = context;
+  const navigate = useNavigate();
+
+  //* Logout Function
+  const logout = () => {
+    localStorage.clear('admin');
+    navigate("/");
+  };
+
   return (
     <Layout>
       <div className="py-10">
@@ -48,6 +56,7 @@ function Dashboard() {
               <Link to={"/createblog"}>
                 <div className=" mb-2">
                   <Button
+                    
                     style={{
                       background:
                         mode === "dark"
@@ -63,6 +72,7 @@ function Dashboard() {
               </Link>
               <div className="mb-2">
                 <Button
+                onClick={logout}
                   style={{
                     background:
                       mode === "dark"
@@ -223,7 +233,6 @@ function Dashboard() {
                     </td>
                   </tr>
                 </tbody>
-                
               </table>
             </div>
           </div>

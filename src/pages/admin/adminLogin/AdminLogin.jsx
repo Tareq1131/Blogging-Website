@@ -1,4 +1,4 @@
-import { useContext} from "react";
+import { useContext, useState} from "react";
 import {
     Card,
     CardHeader,
@@ -8,10 +8,35 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import myContext from "../../../context/data/myContext";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../../fairebase/FirebaseConfig";
+import toast from "react-hot-toast";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function AdminLogin() {
     const context = useContext(myContext);
     const { mode } = context;
+
+    const navigate = useNavigate();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+      //* Login Function
+      const login = async () => {
+        if(!email || !password) {
+            return toast.error("Fill all required fields")
+        }
+        try {
+            const result = await signInWithEmailAndPassword(auth, email, password);
+            toast.success('Login Success')
+            localStorage.setItem('admin', JSON.stringify(result));
+            navigate('/dashboard');
+        } catch (error) {
+            toast.error('Login Failed')
+            console.log(error)
+        }
+    }
 
     return (
         <div className="flex justify-center items-center h-screen">
@@ -64,6 +89,8 @@ export default function AdminLogin() {
                                 type="email"
                                 label="Email"
                                 name="email"
+                                value={email}
+                                onChange={(e)=>setEmail(e.target.value)}
                             />
                         </div>
                         {/* Second Input  */}
@@ -71,10 +98,13 @@ export default function AdminLogin() {
                             <Input
                                 type="password"
                                 label="Password"
+                                value={password}
+                                onChange={(e)=>setPassword(e.target.value)}
                             />
                         </div>
                         {/* Login Button  */}
                         <Button
+                        onClick={login}
                             style={{
                                 background: mode === 'dark'
                                     ? 'rgb(226, 232, 240)'
