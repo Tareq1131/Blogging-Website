@@ -13,6 +13,7 @@ import DashBoard from './pages/admin/dashboard/DashBoard';
 import NoPage from './pages/nopage/NoPage';
 import MyState from "./context/data/myState";
 import { Toaster } from "react-hot-toast";
+import CreateBlog from "./pages/admin/createBlog/CreateBlog";
 
 
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/bloginfo/:id" element={<BlogInfo />} />
           <Route path="/adminlogin" element={<AdminLogin />} />
           <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/createblog" element={<CreateBlog />} />
           <Route path="/*" element={<NoPage />} />
         </Routes>
         <Toaster/>
