@@ -1,4 +1,4 @@
-import { useContext, useState} from "react";
+import { useContext, useEffect, useState} from "react";
 import {
     Card,
     CardHeader,
@@ -38,6 +38,9 @@ export default function AdminLogin() {
         }
     }
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+ }, [])
     return (
         <div className="flex justify-center items-center h-screen">
 
