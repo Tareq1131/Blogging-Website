@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import myContext from "../../../context/data/myContext";
@@ -72,6 +72,10 @@ function CreateBlog() {
   function createMarkup(c) {
     return { __html: c };
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+}, [])
   return (
     <div className=" container mx-auto max-w-2xl py-5">
       <div

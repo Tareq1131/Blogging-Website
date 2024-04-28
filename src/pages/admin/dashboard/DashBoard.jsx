@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Layout from "../../../components/layout/Layout";
 import myContext from "../../../context/data/myContext";
 import { Button } from "@material-tailwind/react";
@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const context = useContext(myContext);
-  const { mode, getAllBlog } = context;
+  const { mode, getAllBlog, deleteBlogs } = context;
 
   const navigate = useNavigate();
 
@@ -15,6 +15,10 @@ function Dashboard() {
     localStorage.clear("admin");
     navigate("/");
   };
+  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+}, [])
 
   return (
     <Layout>
@@ -170,7 +174,7 @@ function Dashboard() {
                 {getAllBlog.length > 0 ? (
                   <>
                     {getAllBlog.map((item, index) => {
-                      const { thumbnail, date } = item;
+                      const { thumbnail, date,id} = item;
                       console.log(item);
                       return (
                         <tbody key={index}>
@@ -232,14 +236,16 @@ function Dashboard() {
                             >
                               {date}
                             </td>
+
                             {/* Delete Blog  */}
                             <td
+                              onClick={() => deleteBlogs(id)}
                               style={{
                                 color: mode === "dark" ? "white" : "black",
                               }}
                               className="px-6 py-4"
                             >
-                              <button className=" px-4 py-1 rounded-lg text-white font-bold bg-red-500">Delete</button>
+                              <button className=" px-4 py-1 rounded-lg text-white font-bold bg-red-500">Delate</button>
                             </td>
                           </tr>
                         </tbody>
